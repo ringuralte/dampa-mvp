@@ -1,5 +1,5 @@
 import type { ActionFunctionArgs } from 'react-router'
-import { Form, redirect, useLoaderData, useNavigation } from 'react-router'
+import { Form, useLoaderData, useNavigation } from 'react-router'
 import { Button } from '~/components/ui/button'
 import { getKnowledgeBase, updateKnowledgeBase } from '~/lib/knowledge-base'
 
@@ -17,7 +17,6 @@ export async function action({ request }: ActionFunctionArgs) {
   }
 
   await updateKnowledgeBase(newKb)
-  return redirect('/admin?success=true')
 }
 
 export default function AdminPage() {

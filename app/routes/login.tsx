@@ -1,9 +1,10 @@
-import { Link, useNavigate } from 'react-router'
+import { Link, useNavigate, useNavigation } from 'react-router'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 
 export default function Login() {
   const navigate = useNavigate()
+  const navigation = useNavigation()
 
   return (
     <div className={`
@@ -22,7 +23,7 @@ export default function Login() {
       >
         <Input />
         <Input />
-        <Button>
+        <Button isLoading={navigation.state === 'submitting'}>
           Login
         </Button>
       </form>
