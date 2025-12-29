@@ -21,31 +21,31 @@ export async function action({ request }: ActionFunctionArgs) {
   apiKey = apiKey.trim().replace(/^["']|["']$/g, '')
 
   // DIAGNOSTIC: Raw fetch to see if it's the library or the key
-  try {
-    const rawResp = await fetch('https://api.openai.com/v1/models', {
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-      },
-    })
+  // try {
+  //   const rawResp = await fetch('https://api.openai.com/v1/models', {
+  //     headers: {
+  //       Authorization: `Bearer ${apiKey}`,
+  //     },
+  //   })
 
-    const rawData = await rawResp.text()
-    if (!rawResp.ok) {
-      return data({
-        error: 'Raw Fetch Auth Failed',
-        status: rawResp.status,
-        statusText: rawResp.statusText,
-        body: rawData,
-        keyLength: apiKey.length,
-        keyPrefix: apiKey.substring(0, 7),
-      }, { status: 401 })
-    }
-  }
-  catch (fetchErr: any) {
-    return data({
-      error: 'Raw Fetch Network Error',
-      details: fetchErr.message,
-    }, { status: 500 })
-  }
+  //   const rawData = await rawResp.text()
+  //   if (!rawResp.ok) {
+  //     return data({
+  //       error: 'Raw Fetch Auth Failed',
+  //       status: rawResp.status,
+  //       statusText: rawResp.statusText,
+  //       body: rawData,
+  //       keyLength: apiKey.length,
+  //       keyPrefix: apiKey.substring(0, 7),
+  //     }, { status: 401 })
+  //   }
+  // }
+  // catch (fetchErr: any) {
+  //   return data({
+  //     error: 'Raw Fetch Network Error',
+  //     details: fetchErr.message,
+  //   }, { status: 500 })
+  // }
 
   const openai = new OpenAI({ apiKey })
 
@@ -72,26 +72,26 @@ export async function action({ request }: ActionFunctionArgs) {
     }
 
     // Verify basic connectivity
-    try {
-      await openai.models.list()
-    }
-    catch (modelError: any) {
-      console.error('Model List Error:', modelError)
-      return data({
-        error: 'OpenAI Auth Check Failed',
-        details: 'Could not list models. Key might be invalid or quota exceeded.',
-        debug: {
-          message: modelError.message,
-          name: modelError.name,
-          stack: modelError.stack, // Be careful exposing this in prod!
-          type: modelError.type,
-          code: modelError.code,
-          param: modelError.param,
-          fullString: String(modelError),
-          raw: JSON.parse(JSON.stringify(modelError, Object.getOwnPropertyNames(modelError))),
-        },
-      }, { status: 401 })
-    }
+    // try {
+    //   await openai.models.list()
+    // }
+    // catch (modelError: any) {
+    //   console.error('Model List Error:', modelError)
+    //   return data({
+    //     error: 'OpenAI Auth Check Failed',
+    //     details: 'Could not list models. Key might be invalid or quota exceeded.',
+    //     debug: {
+    //       message: modelError.message,
+    //       name: modelError.name,
+    //       stack: modelError.stack, // Be careful exposing this in prod!
+    //       type: modelError.type,
+    //       code: modelError.code,
+    //       param: modelError.param,
+    //       fullString: String(modelError),
+    //       raw: JSON.parse(JSON.stringify(modelError, Object.getOwnPropertyNames(modelError))),
+    //     },
+    //   }, { status: 401 })
+    // }
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',

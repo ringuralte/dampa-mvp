@@ -87,6 +87,7 @@ export default function Layout() {
                 <MobileNavLink to="/about-us" onClick={() => setIsMobileMenuOpen(false)}>ABOUT US</MobileNavLink>
                 <MobileNavLink to="/gallery" onClick={() => setIsMobileMenuOpen(false)}>GALLERY</MobileNavLink>
                 <MobileNavLink to="/booking" onClick={() => setIsMobileMenuOpen(false)}>BOOKING</MobileNavLink>
+                <MobileNavLink to="/login" onClick={() => setIsMobileMenuOpen(false)}>LOGIN</MobileNavLink>
               </div>
             </SheetContent>
           </Sheet>
@@ -144,6 +145,7 @@ export default function Layout() {
                 <li><Link to="/about-us" className="hover:text-primary">About Us</Link></li>
                 <li><Link to="/gallery" className="hover:text-primary">Gallery</Link></li>
                 <li><Link to="/booking" className="hover:text-primary">Booking Info</Link></li>
+                <li><Link to="/login" className="hover:text-primary">Login</Link></li>
               </ul>
             </div>
             <div>

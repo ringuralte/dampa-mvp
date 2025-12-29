@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 
@@ -16,7 +16,7 @@ export default function Login() {
         onSubmit={(e) => {
           e.preventDefault()
           e.stopPropagation()
-          navigate('/admin')
+          navigate('/admin/ai-knowledge')
         }}
         className="mt-4 flex w-full max-w-72 flex-col gap-y-6"
       >
@@ -26,6 +26,15 @@ export default function Login() {
           Login
         </Button>
       </form>
+      <Link
+        className={`
+          mt-8 text-sm
+          hover:underline
+        `}
+        to="/"
+      >
+        Go Home.
+      </Link>
     </div>
   )
 }
