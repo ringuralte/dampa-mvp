@@ -15,6 +15,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from 'react-router'
+import { Toaster } from 'sonner'
 import './app.css'
 
 export const links: Route.LinksFunction = () => [
@@ -65,6 +66,7 @@ export default function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <Toaster />
       <NuqsAdapter>
         <Outlet />
       </NuqsAdapter>

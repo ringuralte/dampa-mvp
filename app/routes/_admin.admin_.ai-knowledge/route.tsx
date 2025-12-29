@@ -1,5 +1,7 @@
 import type { ActionFunctionArgs } from 'react-router'
-import { Form, useLoaderData, useNavigation } from 'react-router'
+import { useEffect } from 'react'
+import { Form, useActionData, useLoaderData, useNavigation } from 'react-router'
+import { toast } from 'sonner'
 import { Button } from '~/components/ui/button'
 import { getKnowledgeBase, updateKnowledgeBase } from '~/lib/knowledge-base'
 
@@ -17,12 +19,25 @@ export async function action({ request }: ActionFunctionArgs) {
   }
 
   await updateKnowledgeBase(newKb)
+  return { success: true }
 }
 
 export default function AdminPage() {
   const { currentKb } = useLoaderData<typeof loader>()
   const navigation = useNavigation()
+  const actionData = useActionData<typeof action>()
   const isSaving = navigation.state === 'submitting'
+
+  useEffect(() => {
+    if (navigation.state === 'idle') {
+      if (actionData?.success) {
+        toast.success('Changes saved successfully', { id: 'save-toast' })
+      }
+      else if (actionData?.error) {
+        toast.error(actionData.error, { id: 'save-toast' })
+      }
+    }
+  }, [isSaving, navigation.state, actionData])
 
   return (
     <div className="p-8">

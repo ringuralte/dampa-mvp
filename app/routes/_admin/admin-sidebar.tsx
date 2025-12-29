@@ -1,5 +1,6 @@
 import { LogOutIcon } from 'lucide-react'
 import { NavLink, useLocation } from 'react-router'
+import { toast } from 'sonner'
 import { Button } from '~/components/ui/button'
 import {
   Sidebar,
@@ -24,6 +25,7 @@ export default function AdminSidebar() {
   const location = useLocation()
 
   const handleLogout = () => {
+    toast.success('Logout successful')
     globalThis.location.href = '/login'
   }
 

@@ -1,4 +1,5 @@
 import { Link, useNavigate, useNavigation } from 'react-router'
+import { toast } from 'sonner'
 import { Button } from '~/components/ui/button'
 import { Input } from '~/components/ui/input'
 
@@ -17,6 +18,7 @@ export default function Login() {
         onSubmit={(e) => {
           e.preventDefault()
           e.stopPropagation()
+          toast.success('Login successful')
           navigate('/admin/ai-knowledge')
         }}
         className="mt-4 flex w-full max-w-72 flex-col gap-y-6"
