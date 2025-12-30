@@ -1,4 +1,4 @@
-import type { Flow, Settings, Styles } from 'react-chatbotify'
+import type { Flow, Params, Settings, Styles } from 'react-chatbotify'
 import { useEffect, useState } from 'react'
 import ChatBot from 'react-chatbotify'
 import { useNavigate } from 'react-router'
@@ -114,7 +114,7 @@ export default function AppChatBot() {
       path: 'process_options',
     },
     unknown: {
-      message: async (params) => {
+      message: async (params: Params) => {
         try {
           const response = await fetch('/api/chat', {
             method: 'POST',
@@ -129,7 +129,8 @@ export default function AppChatBot() {
           }
 
           const data = await response.json()
-          return data.response
+          await params.simulateStreamMessage(data.response, 'bot', MsgChunker)
+          return ''
         }
         catch (error) {
           console.error('error', error)
@@ -156,6 +157,9 @@ export default function AppChatBot() {
       mode: 'CLOSE',
       text: 'Need help? Chat with us!',
     },
+    footer: {
+      text: '',
+    },
   }
 
   const styles: Styles = {
@@ -168,4 +172,15 @@ export default function AppChatBot() {
   return (
     <ChatBot flow={flow} settings={settings} styles={styles} />
   )
+}
+
+export function MsgChunker(text: string): string[] {
+  const chunks: string[] = []
+  let i = 0
+  while (i < text.length) {
+    const chunkSize = Math.floor(Math.random() * 3) + 1
+    chunks.push(text.slice(i, i + chunkSize))
+    i += chunkSize
+  }
+  return chunks
 }
